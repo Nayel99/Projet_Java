@@ -23,7 +23,7 @@ public class Continent {
 		France.setVoisins(Voisins_France);
 		
 		//Belgique
-		Voisins_Belgique.add(Belgique);
+		Voisins_Belgique.add(France);
 		Belgique.setVoisins(Voisins_Belgique);
 	}
 	

@@ -11,12 +11,12 @@ public class Simulateur {
 	public void simuler(Pays pays) {
 		
 		//Variables necessaires dans le pays
-		int NbSains = pays.getNbSains();
-		int NbInfectes = pays.getNbInfectes();
-		int NbRetablis = pays.getNbRetablis();
-		int NbIncubation = pays.getNbIncubation();
-		int PopTotal = pays.getPopTotal();
-		int NbMort = pays.getNbMort();
+		double NbSains = pays.getNbSains();
+		double NbInfectes = pays.getNbInfectes();
+		double NbRetablis = pays.getNbRetablis();
+		double NbIncubation = pays.getNbIncubation();
+		double PopTotal = pays.getPopTotal();
+		double NbMort = pays.getNbMort();
 		
 		//Variables necessaires du virus
 		int T_Guerison = virus.getTempsGuerison();
@@ -25,18 +25,19 @@ public class Simulateur {
 		double Taux_Mortalite = virus.getTauxMortalite();
 		
 		//Taux d'incidence
-		double Beta = (double) NbInfectes * R0 / PopTotal;
-		
+		double Beta = R0 / (PopTotal * T_Guerison);
 		//S'il y a des inféctés dans le pays
 		if (NbInfectes > 0) {
-			
+
 		//Calcul de l'étape suivante (J+1)
-		int NbSainsNext = (int) (NbSains - Math.round(NbInfectes * NbSains * Beta));
-		int NbIncubationNext = (int) (NbIncubation + Math.round(Beta * NbInfectes * NbSains - (double) NbIncubation / T_Incubation));
-		int NbInfectesNext = (int) (NbInfectes + Math.round((double) NbIncubation / T_Incubation - NbInfectes / T_Guerison - NbInfectes * Taux_Mortalite));
-		int NbRetablisNext = (int) (NbRetablis + Math.round((double)NbInfectes / T_Guerison));
-		int NbMortNext = (int) (NbMort + Math.round(NbInfectes * Taux_Mortalite));
-		int PopTotalNext = PopTotal - NbMort;
+		System.out.println("S : " + NbSains + "I : " + NbInfectes + "B : " + Beta);
+		double NbSainsNext = NbSains - NbSains * NbInfectes * Beta;
+		double NbIncubationNext = NbIncubation + NbSains * NbInfectes * Beta - NbIncubation / T_Incubation;
+		double NbInfectesNext = NbInfectes + NbIncubation / T_Incubation - NbInfectes / T_Guerison - NbInfectes * Taux_Mortalite;
+		double NbRetablisNext = NbRetablis + NbInfectes / T_Guerison;
+		double NbMortNext = NbMort + NbInfectes * Taux_Mortalite;
+		double PopTotalNext = PopTotal - NbInfectes * Taux_Mortalite;
+		
 		
 		//Modification des variables du pays
 		pays.setNbSains(NbSainsNext);
@@ -49,8 +50,11 @@ public class Simulateur {
 		
 		//S'il n'y a toujours pas d'inféctés dans le pays
 		else {
+			System.out.println(pays.getVoisins().size());
+			System.out.println(pays.getNom());
+		
 			for (int pays_voisins_i = 0; pays_voisins_i < pays.getVoisins().size(); pays_voisins_i++) {
-				if (pays.getVoisin_i(pays_voisins_i).getNbInfectes() / pays.getVoisin_i(pays_voisins_i).getPopTotal() > 0.25) {
+				if (pays.getVoisin_i(pays_voisins_i).getNbInfectes() / pays.getVoisin_i(pays_voisins_i).getPopTotal() > 0.0001) {
 					pays.setNbInfectes(1);
 				}
 			}

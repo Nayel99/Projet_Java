@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Pays {
 	
 	private String nom;
-	private int NbSains;
-	private int NbInfectes = 0;
-	private int NbRetablis = 0;
-	private int NbIncubation = 0;
-	private int PopTotal;
-	private int NbMort = 0;
+	private double NbSains;
+	private double NbInfectes = 0;
+	private double NbRetablis = 0;
+	private double NbIncubation = 0;
+	private double PopTotal;
+	private double NbMort = 0;
 	private ArrayList<Pays> Voisins;
 	
 	//Constructeur
@@ -21,40 +21,40 @@ public class Pays {
 	}
 	
 	//Getter et Setter
-	public int getNbSains() {
+	public double getNbSains() {
 		return NbSains;
 	}
-	public void setNbSains(int nbSains) {
+	public void setNbSains(double nbSains) {
 		NbSains = nbSains;
 	}
-	public int getNbInfectes() {
+	public double getNbInfectes() {
 		return NbInfectes;
 	}
-	public void setNbInfectes(int nbInfectes) {
+	public void setNbInfectes(double nbInfectes) {
 		NbInfectes = nbInfectes;
 	}
-	public int getNbRetablis() {
+	public double getNbRetablis() {
 		return NbRetablis;
 	}
-	public void setNbRetablis(int nbRetablis) {
+	public void setNbRetablis(double nbRetablis) {
 		NbRetablis = nbRetablis;
 	}
-	public int getNbIncubation() {
+	public double getNbIncubation() {
 		return NbIncubation;
 	}
-	public void setNbIncubation(int nbIncubation) {
+	public void setNbIncubation(double nbIncubation) {
 		NbIncubation = nbIncubation;
 	}
-	public int getPopTotal() {
+	public double getPopTotal() {
 		return PopTotal;
 	}
-	public void setPopTotal(int popTotal) {
+	public void setPopTotal(double popTotal) {
 		PopTotal = popTotal;
 	}
-	public int getNbMort() {
+	public double getNbMort() {
 		return NbMort;
 	}
-	public void setNbMort(int nbMort) {
+	public void setNbMort(double nbMort) {
 		NbMort = nbMort;
 	}
 	public ArrayList<Pays> getVoisins() {

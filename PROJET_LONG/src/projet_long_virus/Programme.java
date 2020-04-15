@@ -52,9 +52,9 @@ public class Programme {
 		Europe.France.setNbInfectes(10);
 		Europe.France.setPopTotal(990);
 		Europe.France.setNbSains(990);
+		
 		//Simulation étape par étape avec le temps qui augmente à chaque fois qu'une étape se termine
 		int Jour_i = 0;
-		int NbInfectesTot = 0;
 		while (Jour_i < Temps_Utilisateur) {
 			
 			//Simulation en interne des pays
@@ -62,16 +62,17 @@ public class Programme {
 				
 				//Simulation pour tous les pays du continent
 				simulateur.simuler(Europe.getPays().get(pays_i));
-				
-				//Calcul du nombre d'infecté
-				NbInfectesTot += Europe.getPays().get(pays_i).getNbInfectes();
-				
+
 			}
+			
 			Jour_i = Jour_i + 1;
-			System.out.println("Jour " + Jour_i + " : " + NbInfectesTot);
-			System.out.println("infecte France : " + Europe.France.getNbInfectes());
-			System.out.println("Sains France : " + Europe.France.getNbSains());
-			System.out.println("Retablis France : " + Europe.France.getNbRetablis());
 		}
+		
+		System.out.println("infecte France : " + Europe.France.getNbInfectes());
+		System.out.println("Sains France : " + Europe.France.getNbSains());
+		System.out.println("Retablis France : " + Europe.France.getNbRetablis());
+		System.out.println("Mort en France : " + Europe.France.getNbMort());
+		System.out.println("Incubation France : " + Europe.France.getNbIncubation());
+		System.out.println("Infecte en Belgique : " + Europe.Belgique.getNbInfectes());
 	}
 }
