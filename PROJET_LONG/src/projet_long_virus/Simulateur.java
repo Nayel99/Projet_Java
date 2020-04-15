@@ -50,9 +50,6 @@ public class Simulateur {
 		
 		//S'il n'y a toujours pas d'inféctés dans le pays
 		else {
-			System.out.println(pays.getVoisins().size());
-			System.out.println(pays.getNom());
-		
 			for (int pays_voisins_i = 0; pays_voisins_i < pays.getVoisins().size(); pays_voisins_i++) {
 				if (pays.getVoisin_i(pays_voisins_i).getNbInfectes() / pays.getVoisin_i(pays_voisins_i).getPopTotal() > 0.0001) {
 					pays.setNbInfectes(1);
