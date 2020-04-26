@@ -8,8 +8,8 @@ public class Continent {
 	//private Pays[] Continent;
 	
 	//Création des pays
-	Pays France = new Pays("France", 1000);
-	Pays Belgique = new Pays("Belgique", 1000);
+	Pays France = new Pays("France", 60000000);
+	Pays Belgique = new Pays("Belgique", 1000000);
 	
 	//Création des voisins
 	ArrayList<Pays> Voisins_France = new ArrayList<Pays>();

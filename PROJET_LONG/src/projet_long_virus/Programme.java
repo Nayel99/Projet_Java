@@ -1,10 +1,12 @@
 package projet_long_virus;
 
 import java.util.Scanner;
+import projet_long_virus.Courbe.Point;
+import projet_long_virus.Courbe.TraceurCourbes;
 
 public class Programme {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
 		//Interface utilisateur, on lui demande les valeurs qu'il désire simuler
 		System.out.println("Nous avons besoin d'informations sur le virus que vous voulez simuler :");
@@ -50,8 +52,11 @@ public class Programme {
 		
 		//Infection du pays demandé par l'utilisateur
 		Europe.France.setNbInfectes(10);
-		Europe.France.setPopTotal(990);
-		Europe.France.setNbSains(990);
+		Europe.France.setPopTotal(5999990);
+		Europe.France.setNbSains(5999990);
+		
+		//Création d'une courbe
+		TraceurCourbes courbe_virus = new TraceurCourbes();
 		
 		//Simulation étape par étape avec le temps qui augmente à chaque fois qu'une étape se termine
 		int Jour_i = 0;
@@ -64,8 +69,9 @@ public class Programme {
 				simulateur.simuler(Europe.getPays().get(pays_i));
 
 			}
-			
+			courbe_virus.courbe.ajouterPoint(new Point(Jour_i, Europe.France.getNbInfectes()));
 			Jour_i = Jour_i + 1;
+			Thread.sleep(100);
 		}
 		
 		System.out.println("infecte France : " + Europe.France.getNbInfectes());
