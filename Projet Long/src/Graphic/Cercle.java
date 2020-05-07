@@ -1,9 +1,8 @@
 package Graphic;
 
 import java.awt.Color;
-import java.awt.Graphics;
 
-public class Cercle {
+public class Cercle{
 
 	private Point centre;
 	private int rayon;
@@ -15,10 +14,12 @@ public class Cercle {
 		this.couleur = couleur;
 	}
 	
-	public void DessinerCercle(Graphics g) {
-		g.setColor(this.couleur);
-		g.drawArc((int) this.centre.getX(), (int) this.centre.getY(), this.rayon, this.rayon, 0, 360);
-		g.fillArc((int) this.centre.getX(), (int) this.centre.getY(), this.rayon, this.rayon, 0, 360);
+	public Point getCentre() {
+		return this.centre;
+	}
+	
+	public Color getColor() {
+		return this.couleur;
 	}
 	
 	public int getrayon() {

@@ -1,6 +1,8 @@
 package Graphic;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -16,19 +18,26 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 public class InterfacePrincipale extends JFrame{
 
 	private static final long serialVersionUID = -714093729841498863L;
+	
+	private static boolean VirusExiste = false;
+	
+	private static boolean TempsExiste = false;
+	
+	private static boolean SimulationPossible = false;
+	
+	static int TempsSimulation = 0;
 
 	private JButton BoutonChoixVirus = new JButton("Choisir le virus");
 	
 	private JButton BoutonImpoterVirus = new JButton("Importer le virus");
 	
-	private JButton BoutonImpoterDate = new JButton("Importer la date");
+	private JButton BoutonImpoterDate = new JButton("Ajuster la date");
 	
 	private JButton BoutonQuitter = new JButton("Quitter");
 	
@@ -36,12 +45,16 @@ public class InterfacePrincipale extends JFrame{
 	
 	private JComboBox<String> ChoixSimul;
 	
-	private JTextArea text = new JTextArea("Veullez choisir la simulation");
+	private JLabel text = new JLabel("Veullez choisir la simulation");
 	
 	private final ActionListener actionLancerSimul = new actionLancerSimul();
 	
 	private final ActionListener actionQuitter = new actionQuitter();
 	
+	private final ActionListener actionChoixVirus = new actionChoixVirus();
+
+	private final ActionListener actionChoixTemps = new actionChoixTemps();
+
 	public InterfacePrincipale() throws Exception {
 		
 		super( "SIMULATION VIRUS" );
@@ -57,11 +70,7 @@ public class InterfacePrincipale extends JFrame{
 		Positionner(nord, droite);
 
 		AjouterTous(nord, droite);
-		
-		BoutonLancerSimul.addActionListener(this.actionLancerSimul);
-
 	}
-	
 	
 	private void Positionner(JPanel nord, JPanel droite) {
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -69,16 +78,17 @@ public class InterfacePrincipale extends JFrame{
 		int ySize = ((int) tk.getScreenSize().getHeight());
 		nord.setBounds(10, 10, xSize-20, 50);
 		droite.setBounds(xSize-370, ySize-300, 300, 200);
-		this.text.setBounds(20,  ySize-300, 300, 30);
+		this.text.setBounds(65,  ySize-290, 300, 30);
 		this.ChoixSimul.setBounds(20,  ySize-250, 300, 30);
 	}
 	
 	private void EditerChoix() {
-		this.text.setEditable(false);
+		this.text.setForeground(Color.white);
+		this.text.setFont(new Font("Arial",Font.BOLD,14));
 		this.text.setOpaque(false);
 		String[] typeSim= { "type 1", "type 2", "type 3"};
 		this.ChoixSimul = new JComboBox<String>(typeSim);
-	}
+	}	
 	
 	private JLabel CreerBackground() {
 		JLabel background;
@@ -87,19 +97,39 @@ public class InterfacePrincipale extends JFrame{
 		background.setOpaque(false);
 		return background;
 		
+
+	}
+	
+	private class actionChoixVirus implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+				InterfaceChoixVirus Mafenetre;
+				Mafenetre = new InterfaceChoixVirus();
+				Mafenetre.setVisible(true);
+		}
+	}
+
+	private class actionChoixTemps implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+				InterfaceChoixTemps Mafenetre;
+				Mafenetre = new InterfaceChoixTemps();
+				Mafenetre.setVisible(true);
+		}
 	}
 	
 	private class actionLancerSimul implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			
-			try {
-				InterfaceSimulation Mafenetre;
-				Mafenetre = new InterfaceSimulation();
-				Mafenetre.setVisible(true);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}		
-			
+			if (SimulationPossible == false) {
+				JOptionPane.showMessageDialog(null, "Veuillez compléter votre choix !");
+			}
+			else {
+				try {
+					InterfaceSimulation Mafenetre;
+					Mafenetre = new InterfaceSimulation();
+					Mafenetre.setVisible(true);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}		
+			}
 		}
 	}
 	
@@ -128,10 +158,13 @@ public class InterfacePrincipale extends JFrame{
 		JPanel nord = new JPanel();
 
 		nord.setLayout( new GridLayout(1, 3, 200,0) );
+		
+		BoutonChoixVirus.addActionListener(this.actionChoixVirus);
 		nord.add(BoutonChoixVirus);
 		
 		nord.add(BoutonImpoterVirus);
 		
+		BoutonImpoterDate.addActionListener(this.actionChoixTemps);
 		nord.add(BoutonImpoterDate);
 		nord.setOpaque(false);
 		
@@ -142,6 +175,7 @@ public class InterfacePrincipale extends JFrame{
 		JPanel droite = new JPanel();
 		droite.setLayout( new GridLayout(2, 1, 0,50) );
 		droite.setOpaque(false);
+		BoutonLancerSimul.addActionListener(this.actionLancerSimul);
 		droite.add(BoutonLancerSimul);
 		BoutonQuitter.addActionListener(this.actionQuitter);
 		droite.add(BoutonQuitter);
@@ -172,6 +206,26 @@ public class InterfacePrincipale extends JFrame{
 		}
 	}
 	
+	public static void SetTemps(int nb) {
+		TempsSimulation = nb;
+	}
+	
+	public static void VirusExiste(boolean b) {
+		VirusExiste = b;
+	}
+	
+	public static void TempsExiste(boolean b) {
+		TempsExiste = b;
+	}
+	
+	public static void Simulasionpossible() {
+		if (VirusExiste == true && TempsExiste == true) {
+			SimulationPossible = true;
+		} else {
+			SimulationPossible = false;
+		}
+	}
+	
 	public static void main(String[] args) throws Exception {
 		
 		UIManager.setLookAndFeel( new NimbusLookAndFeel() );	
@@ -179,5 +233,5 @@ public class InterfacePrincipale extends JFrame{
 		Mafenetre.setVisible(true);
 
 	}
-
 }
+

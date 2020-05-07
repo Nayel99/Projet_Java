@@ -1,6 +1,7 @@
 package Graphic;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 /** Point modélise un point géométrique dans un plan équipé d'un
  * repère cartésien.  Un point peut être affiché et translaté.
@@ -96,6 +97,15 @@ public class Point {
 	  */
 	public void setCouleur(Color nouvelleCouleur) {
 		this.couleur = nouvelleCouleur;
+	}
+	
+	public void dessinerpoint(Graphics g) {
+		g.setColor(this.couleur);
+		g.setColor(Color.black);
+		int x1=(int) this.getX();
+		int y1=(int) this.getY();
+		g.drawLine(x1-4, y1, x1+4, y1);
+		g.drawLine(x1, y1-4, x1, y1+4);
 	}
 
 }
